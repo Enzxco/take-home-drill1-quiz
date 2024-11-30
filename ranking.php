@@ -11,10 +11,8 @@ if (isset($_GET['username']) && isset($_GET['score'])) {
 
     $leaderboard_result = $conn->query("SELECT id, username, score, time_taken FROM quiz_results ORDER BY score DESC, time_taken ASC LIMIT 10");
 
-
     if (isset($_GET['delete_user'])) {
         $delete_user = htmlspecialchars($_GET['delete_user']);
-
         $conn->query("DELETE FROM quiz_results WHERE username = '$delete_user' LIMIT 1");
 
         header("Location: ranking.php?username=$username&score=$score");
@@ -31,51 +29,48 @@ if (isset($_GET['username']) && isset($_GET['score'])) {
 <head>
     <meta charset="UTF-8">
     <title>Quiz Leaderboard</title>
+    <link rel="stylesheet" href="ranking_styles.css">
 </head>
 
 <body>
-    <center>
-    <h1>Congratulations, <?php echo $username; ?>!</h1>
+    <div class="container">
+        <h1>Congratulations, <?php echo htmlspecialchars($username); ?>!</h1>
 
-    <p>Your Score: <?php echo $score; ?></p>
-    <p>Your Rank: <?php echo $user_rank; ?></p>
+        <p class="score">Your Score: <strong><?php echo $score; ?></strong></p>
+        <p class="rank">Your Rank: <strong><?php echo $user_rank; ?></strong></p>
 
-    <h2>Leaderboard</h2>
+        <h2>Leaderboard</h2>
 
-    <table border="1" cellspacing="0" cellpadding="5">
-        <tr>
-            <th>Rank</th>
-            <th>Username</th>
-            <th>Score</th>
-            <th>Time Taken</th>
-            <th>Action</th>
-        </tr>
+        <table class="leaderboard">
+            <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Score</th>
+                <th>Time Taken</th>
+                <th>Action</th>
+            </tr>
 
-        <?php
-        if ($leaderboard_result->num_rows > 0) {
+            <?php
+            if ($leaderboard_result->num_rows > 0) {
+                $rank = 1;
 
-            $rank = 1;
-
-            while ($row = $leaderboard_result->fetch_assoc()) {
-                echo "<tr>";
-                    echo "<td>$rank</td>";
-                    echo "<td>" . $row['username'] . "</td>";
-                    echo "<td>" . $row['score'] . "</td>";
-                    echo "<td>" . $row['time_taken'] . " seconds</td>";
-                    echo "<td><a href='?username=$username&score=$score&delete_user=" . $row['username'] . "'>Delete</a></td>"; // Delete link for specific row
-                echo "</tr>";
-                $rank++;
+                while ($row = $leaderboard_result->fetch_assoc()) {
+                    echo "<tr>";
+                        echo "<td>$rank</td>";
+                        echo "<td>" . htmlspecialchars($row['username']) . "</td>";
+                        echo "<td>" . $row['score'] . "</td>";
+                        echo "<td>" . $row['time_taken'] . " seconds</td>";
+                        echo "<td><a class='delete-link' href='?username=$username&score=$score&delete_user=" . htmlspecialchars($row['username']) . "'>Delete</a></td>";
+                    echo "</tr>";
+                    $rank++;
+                }
+            } else {
+                echo "<tr><td colspan='5'>No leaderboard data available.</td></tr>";
             }
-        } else {
-            echo "<tr><td colspan='5'>No leaderboard data available.</td></tr>";
-        }
-        ?>
-    </table>
+            ?>
+        </table>
 
-    <br>
-
-    <a href="enter.php">Try Again</a>
-
-    </center>
+        <a class="retry-link" href="enter.php">Try Again</a>
+    </div>
 </body>
 </html>

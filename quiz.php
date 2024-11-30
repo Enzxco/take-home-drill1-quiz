@@ -1,7 +1,6 @@
 <?php
 include "conn.php";
 
-// Step 1: Check if username is passed
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
     $username = $_POST['username'];
 } else {
@@ -10,21 +9,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
     exit;
 }
 
-$quiz_title = "PHP Quiz";
+$quiz_title = "PHP & HTML Quiz";
 $questions = [
     [
-        "question" => "1. Sino ang gumawa ng guild chat (GC) ng grupo?",
-        "options" => ["Lawrence", "Vince", "Hidenori", "Lenard"],
+        "question" => "1. What does HTML stand for?",
+        "options" => [
+            "Hyper Text Markup Language",
+            "Home Tool Markup Language",
+            "Hyperlinks and Text Markup Language",
+            "Hyper Text Makeup Language"
+        ],
+        "answer" => 0,
+    ],
+    [
+        "question" => "2. What does PHP stand for?",
+        "options" => [
+            "Personal Home Page",
+            "PHP: Hypertext Preprocessor",
+            "Private Hosting Protocol",
+            "Programmed Hypertext Processor"
+        ],
         "answer" => 1,
     ],
     [
-        "question" => "2. Tamang pangalan ng grupo?",
-        "options" => ["Intro Shit", "Intro Gay", "Intro Chill", "None of the Above"],
-        "answer" => 2,
+        "question" => "3. Which HTML tag is used to create a hyperlink?",
+        "options" => [
+            htmlspecialchars("<a>"),
+            htmlspecialchars("<link>"),
+            htmlspecialchars("<href>"),
+            htmlspecialchars("<hyperlink>")
+        ],
+        "answer" => 0,
     ],
     [
-        "question" => "3. Ilan ang member ng grupo sa kasulukuyan?",
-        "options" => ["5", "3", "4", "6"],
+        "question" => "4. Which PHP function is used to print output?",
+        "options" => [
+            "print()",
+            "echo()",
+            "output()",
+            "write()"
+        ],
+        "answer" => 1,
+    ],
+    [
+        "question" => "5. Which is the correct way to declare a PHP variable?",
+        "options" => [
+            '$variable',
+            "var variable",
+            "@variable",
+            "#variable"
+        ],
         "answer" => 0,
     ]
 ];
@@ -35,15 +69,14 @@ $questions = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP QUIZ</title>
+    <title>PHP & HTML QUIZ</title>
+    <link rel="stylesheet" href="quiz_styles.css">
     <script>
-        // JavaScript to track the start time
         let startTime = new Date().getTime();
 
-        // Function to calculate the time spent
         function calculateTimeSpent() {
             let endTime = new Date().getTime();
-            let timeSpent = Math.floor((endTime - startTime) / 1000); // Time in seconds
+            let timeSpent = Math.floor((endTime - startTime) / 1000);
             document.getElementById('time_taken').value = timeSpent;
         }
     </script>

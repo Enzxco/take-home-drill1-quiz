@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHP Quiz: Enter Name</title>
+    <link rel="stylesheet" href="enter_styles.css">
 </head>
 <body>
     <h1>PHP QUIZ</h1>
-    <h3>Enter your name:</h3>
     <form action="quiz.php" method="post">
-        <label>Username:</label>
-        <input type="text" name="username" required>
+        <input type="text" name="username" placeholder="Enter your name" required>
         <button type="submit" name="submit">SUBMIT</button>
     </form>
 </body>
